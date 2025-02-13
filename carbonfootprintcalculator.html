@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carbon Updates Calculator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Global Styles */
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #e0f7e0; /* Light green background */
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      color: #333;
+    }
+    header {
+      width: 100%;
+      background-color: #a3d9a5; /* Slightly darker green for header */
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    header h1 {
+      margin: 0;
+      font-weight: 700;
+      color: #fff;
+    }
+    .container {
+      background-color: #fff; /* White card for contrast */
+      max-width: 500px;
+      width: 90%;
+      margin: 40px auto;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      border: 2px solid #a3d9a5;
+    }
+    h2 {
+      margin-top: 0;
+      color: #2ecc71;
+      text-align: center;
+      font-size: 1.8em;
+    }
+    form {
+      display: grid;
+      gap: 20px;
+    }
+    label {
+      font-weight: 500;
+      display: block;
+      margin-bottom: 5px;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #a3d9a5;
+      border-radius: 8px;
+      background-color: #f9fff9;
+      font-size: 16px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    input[type="number"]:focus {
+      border-color: #2ecc71;
+      box-shadow: 0 0 8px rgba(46, 204, 113, 0.4);
+      outline: none;
+    }
+    button {
+      background: linear-gradient(45deg, #2ecc71, #27ae60);
+      color: #fff;
+      border: none;
+      padding: 15px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: linear-gradient(45deg, #27ae60, #2ecc71);
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 1.3em;
+      font-weight: 500;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Carbon Updates Calculator</h1>
+  </header>
+  <div class="container">
+    <h2>Carbon Footprint Calculator</h2>
+    <form onsubmit="event.preventDefault(); calculateFootprint();">
+      <div>
+        <label for="electricity">Electricity Usage (kWh per month):</label>
+        <input type="number" id="electricity" placeholder="Enter kWh" />
+      </div>
+      <div>
+        <label for="transport">Transport Distance (km per day):</label>
+        <input type="number" id="transport" placeholder="Enter km" />
+      </div>
+      <div>
+        <label for="food">Meat Consumption (kg per week):</label>
+        <input type="number" id="food" placeholder="Enter kg" />
+      </div>
+      <button type="submit">Calculate</button>
+    </form>
+    <div class="result">
+      Your Estimated Carbon Footprint: <span id="result">0</span> kg CO₂ per month
+    </div>
+  </div>
+
+  <script>
+    function calculateFootprint() {
+      const electricity = parseFloat(document.getElementById("electricity").value) || 0;
+      const transport = parseFloat(document.getElementById("transport").value) || 0;
+      const food = parseFloat(document.getElementById("food").value) || 0;
+      
+      // Approximate emission factors:
+      const electricityEmissions = electricity * 0.5;  // kg CO₂ per kWh
+      const transportEmissions = transport * 0.15 * 30;  // km per day * 30 days
+      const foodEmissions = food * 27 * 4;               // kg CO₂ per kg * 4 weeks
+      
+      const totalFootprint = electricityEmissions + transportEmissions + foodEmissions;
+      document.getElementById("result").innerText = totalFootprint.toFixed(2);
+    }
+  </script>
+</body>
+</html>
